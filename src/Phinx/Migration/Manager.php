@@ -341,7 +341,7 @@ class Manager
             }
         }
 
-        ksort($migrations);
+        $this->versionKsort($migrations);
         foreach ($migrations as $migration) {
             if ($migration->getVersion() > $version) {
                 break;
@@ -722,7 +722,7 @@ class Manager
                 }
             }
 
-            ksort($versions);
+            $this->versionKsort($versions);
             $this->setMigrations($versions);
         }
 
@@ -867,7 +867,7 @@ class Manager
                 }
             }
 
-            ksort($seeds);
+            $this->versionKsort($seeds);
             $this->setSeeds($seeds);
         }
 
@@ -979,5 +979,10 @@ class Manager
             ' %d breakpoints cleared.',
             $this->getEnvironment($environment)->getAdapter()->resetAllBreakpoints()
         ));
+    }
+
+    protected function versionKsort(&$items)
+    {
+        ksort($items, SORT_STRING);
     }
 }
